@@ -1,0 +1,46 @@
+.venv
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Storage (videos, audio artifacts)
+storage/
+*.mp4
+*.wav
+*.mp3
+*.webm
+*.mkv
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Pytest
+.pytest_cache/
+.coverage
+
+# Logs
+*.log
