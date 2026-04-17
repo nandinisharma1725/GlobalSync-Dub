@@ -180,13 +180,51 @@ def build_dubbed_audio_track(
 
 
 def get_video_duration(video_path: str) -> float:
-    """Gets video duration in seconds using librosa."""
+    """Gets video duration in seconds.
+
+    Tries ffprobe first (most reliable for video files), then falls back
+    to loading the extracted audio.wav, then to librosa on the video.
+    """
+    # 1. Try ffprobe via imageio_ffmpeg
     try:
-        # Try using librosa to get duration via audio track
+        ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
+        # ffprobe is co-located with ffmpeg in imageio_ffmpeg
+        result = subprocess.run(
+            [
+                ffmpeg_path, "-i", video_path,
+                "-hide_banner",
+            ],
+            capture_output=True,
+            text=True,
+        )
+        # ffmpeg -i prints duration in stderr like: Duration: 00:01:23.45
+        import re
+        match = re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)", result.stderr)
+        if match:
+            h, m, s = float(match.group(1)), float(match.group(2)), float(match.group(3))
+            duration = h * 3600 + m * 60 + s
+            if duration > 0:
+                log.info("stage5.video_duration_ffprobe", duration=round(duration, 2))
+                return duration
+    except Exception:
+        pass
+
+    # 2. Try loading the extracted audio.wav from the same output directory
+    try:
+        wav_path = Path(video_path).parent / "audio.wav"
+        if wav_path.exists():
+            y, sr = librosa.load(str(wav_path), sr=None, mono=True)
+            duration = len(y) / sr
+            log.info("stage5.video_duration_wav_fallback", duration=round(duration, 2))
+            return duration
+    except Exception:
+        pass
+
+    # 3. Try librosa directly on the video
+    try:
         y, sr = librosa.load(video_path, sr=None, mono=True)
         return len(y) / sr
     except Exception:
-        # Fallback: assume a reasonable default
         log.warning("stage5.could_not_get_video_duration", video=video_path)
         return 300.0  # 5 minute default
 
