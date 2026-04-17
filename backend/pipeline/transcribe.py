@@ -1,149 +1,188 @@
 """
-backend/pipeline/transcribe.py
+backend/pipeline/transcribe.py  (fixed for Windows — WinError 2)
 
-Stage 2 — Speech-to-Text using OpenAI Whisper
+Root cause of the error:
+  Whisper's model.transcribe(path) internally spawns an ffmpeg subprocess
+  to decode audio. On Windows, this subprocess inherits a different working
+  directory, so relative (and sometimes absolute) paths silently resolve to
+  nothing → [WinError 2] The system cannot find the file specified.
 
-What this does:
-  - Sends each speaker segment's audio to Whisper
-  - Gets back text + word-level timestamps
-  - Returns enriched segments ready for translation
-
-Why word-level timestamps matter:
-  The timestamps are the backbone of sync. Every word's start/end time
-  is used later (Stage 5) to time-stretch the dubbed audio correctly.
-
-Output per segment:
-  {
-    "speaker": "SPEAKER_00",
-    "start": 2.1,
-    "end": 6.8,
-    "text": "Good morning everyone, let's begin the Q4 review.",
-    "words": [
-      {"word": "Good", "start": 2.1, "end": 2.4},
-      ...
-    ]
-  }
+Fix:
+  Load the audio as a float32 numpy array ourselves using soundfile,
+  then pass the array directly to model.transcribe(). Whisper fully supports
+  numpy array input — this bypasses its internal ffmpeg call entirely.
 """
 
 import os
 import json
-import subprocess
+import time
+import gc
 from pathlib import Path
-from typing import Optional
 import structlog
+import numpy as np
+import soundfile as sf
+import whisper
 
-from openai import OpenAI
 from ..utils.config import get_settings
-from ..utils.storage import save_artifact
 
 log = structlog.get_logger()
 settings = get_settings()
 
+WHISPER_SAMPLE_RATE = 16_000   # Whisper always expects 16 kHz mono float32
 
-def slice_audio(
-    wav_path: str,
-    start: float,
-    end: float,
-    output_path: str,
-) -> str:
-    """
-    Cuts a WAV segment using FFmpeg (fast, no re-encode).
-    Adds 0.1s silence padding at start/end to help Whisper.
-    """
-    duration = end - start
-    if duration <= 0:
-        raise ValueError(f"Invalid segment: start={start} end={end}")
 
-    result = subprocess.run(
-        [
-            "ffmpeg", "-y",
-            "-ss", str(max(0, start - 0.05)),   # tiny pre-roll
-            "-t",  str(duration + 0.1),           # tiny post-roll
-            "-i",  wav_path,
-            "-acodec", "pcm_s16le",
-            "-ar", "16000",
-            "-ac", "1",
-            output_path,
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"FFmpeg slice failed:\n{result.stderr}")
+def slice_audio(wav_path: str, start: float, end: float, output_path: str) -> str:
+    """
+    Slices a WAV segment using soundfile (pure Python, no external deps).
+    Writes a 16 kHz mono WAV that Whisper can consume.
+    """
+    wav_path    = str(Path(wav_path).resolve())
+    output_path = str(Path(output_path).resolve())
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+
+    log.info("slice_audio.start", input=wav_path, output=output_path,
+             start=start, end=end)
+
+    info = sf.info(wav_path)
+    sr   = info.samplerate
+
+    start_sample = int(start * sr)
+    end_sample   = int(end   * sr)
+
+    y, _ = sf.read(wav_path, start=start_sample, stop=end_sample, dtype="float32")
+
+    if y.ndim > 1:                        # stereo → mono
+        y = y.mean(axis=1)
+
+    if len(y) == 0:
+        log.warning("slice_audio.empty_segment", start=start, end=end)
+        y = np.zeros(int(sr * 0.1), dtype="float32")
+
+    # Resample to 16 kHz if the source WAV isn't already 16 kHz
+    if sr != WHISPER_SAMPLE_RATE:
+        import librosa
+        y = librosa.resample(y, orig_sr=sr, target_sr=WHISPER_SAMPLE_RATE)
+
+    sf.write(output_path, y, WHISPER_SAMPLE_RATE)
+
+    # Small delay so Windows flushes the file handle before Whisper touches it
+    time.sleep(0.1)
+
+    file_size = Path(output_path).stat().st_size
+    if file_size == 0:
+        raise RuntimeError(f"Written audio file is empty: {output_path}")
+
+    log.info("slice_audio.done", output=output_path, size=file_size)
     return output_path
 
 
-def transcribe_segment(
-    client: OpenAI,
-    audio_path: str,
-    language: str = "en",
-) -> dict:
+def _load_audio_array(audio_path: str) -> np.ndarray:
     """
-    Sends one audio slice to Whisper.
-    Returns {"text": "...", "words": [...]}
+    Reads a WAV file into a 16 kHz mono float32 numpy array.
+    This is what we pass directly to Whisper — no ffmpeg subprocess involved.
+    """
+    audio_path = str(Path(audio_path).resolve())
 
-    NOTE: verbose_json response format gives us word-level timestamps.
+    y, sr = sf.read(audio_path, dtype="float32")
+
+    if y.ndim > 1:
+        y = y.mean(axis=1)
+
+    if sr != WHISPER_SAMPLE_RATE:
+        import librosa
+        y = librosa.resample(y, orig_sr=sr, target_sr=WHISPER_SAMPLE_RATE)
+
+    # Whisper expects float32 in [-1, 1]
+    peak = np.abs(y).max()
+    if peak > 1.0:
+        y = y / peak
+
+    return y.astype(np.float32)
+
+
+# Module-level model cache — load once per worker process, not per segment
+_whisper_model = None
+
+def _get_model():
+    global _whisper_model
+    if _whisper_model is None:
+        log.info("transcribe.loading_model", model="base")
+        _whisper_model = whisper.load_model("base", device="cpu")
+    return _whisper_model
+
+
+def transcribe_segment(audio_path: str, language: str = "en") -> dict:
     """
-    with open(audio_path, "rb") as f:
-        response = client.audio.transcriptions.create(
-            model=settings.default_whisper_model,
-            file=f,
+    Transcribes one audio segment.
+
+    KEY CHANGE: loads the WAV into a numpy array first, then calls
+    model.transcribe(array) instead of model.transcribe(path).
+    This completely avoids Whisper's internal ffmpeg subprocess,
+    which is the source of [WinError 2] on Windows.
+
+    Returns:
+        {"text": "...", "words": [...]}
+    """
+    audio_path_abs = str(Path(audio_path).resolve())
+
+    # Verify the file is accessible before we do anything
+    if not Path(audio_path_abs).exists():
+        raise FileNotFoundError(f"Audio chunk not found: {audio_path_abs}")
+
+    try:
+        # ── Load audio as numpy array (bypasses Whisper's ffmpeg) ──────────
+        log.info("transcribe.load_audio", path=audio_path_abs)
+        audio_array = _load_audio_array(audio_path_abs)
+
+        log.info("transcribe.start",
+                 samples=len(audio_array),
+                 duration_s=round(len(audio_array) / WHISPER_SAMPLE_RATE, 2))
+
+        model = _get_model()
+
+        # Pass numpy array directly — no file path, no ffmpeg subprocess
+        result = model.transcribe(
+            audio_array,           # <-- numpy array, not a file path
             language=language,
-            response_format="verbose_json",
-            timestamp_granularities=["word"],
+            verbose=False,
+            fp16=False,            # CPU only on most dev machines
         )
 
-    text = response.text.strip()
+        text = result["text"].strip()
 
-    # Extract word timestamps — offset by segment start
-    words = []
-    if hasattr(response, "words") and response.words:
-        for w in response.words:
-            words.append({
-                "word": w.word,
-                "start": round(w.start, 3),
-                "end": round(w.end, 3),
-            })
+        # Extract segment-level timestamps as word approximations
+        words = []
+        for seg in result.get("segments", []):
+            seg_text = seg.get("text", "").strip()
+            if seg_text:
+                words.append({
+                    "word":  seg_text,
+                    "start": round(seg["start"], 3),
+                    "end":   round(seg["end"],   3),
+                })
 
-    return {"text": text, "words": words}
+        log.info("transcribe.done", text_preview=text[:60], segments=len(words))
+        return {"text": text, "words": words}
+
+    except Exception as e:
+        log.error("transcribe.failed", path=audio_path_abs, error=str(e))
+        raise
 
 
 def run(stage1_result: dict, output_dir: str, source_language: str = "en") -> dict:
     """
     Main entry point for Stage 2.
-
-    Processes every segment from Stage 1, transcribing each audio slice.
-    Saves results to disk so the pipeline can be resumed on failure.
-
-    Args:
-        stage1_result: Output from stage1_extract.run()
-        output_dir: Working directory for this job
-        source_language: ISO 639-1 code (default "en" for English board meetings)
-
-    Returns:
-        {
-          "segments": [
-            {
-              "speaker": "SPEAKER_00",
-              "start": 2.1,
-              "end": 6.8,
-              "text": "...",
-              "words": [...],
-            },
-            ...
-          ]
-        }
+    Iterates every diarized segment, slices audio, transcribes with Whisper.
+    Results are cached to disk so the pipeline can resume after a crash.
     """
     cache_path = Path(output_dir) / "transcription.json"
     if cache_path.exists():
         log.info("stage2.cache_hit")
         return json.loads(cache_path.read_text())
 
-    client = OpenAI(api_key=settings.openai_api_key)
-
-    wav_path = stage1_result["wav_path"]
+    wav_path     = stage1_result["wav_path"]
     raw_segments = stage1_result["segments"]
-    chunks_dir = Path(output_dir) / "chunks"
+    chunks_dir   = Path(output_dir) / "chunks"
     chunks_dir.mkdir(exist_ok=True)
 
     enriched_segments = []
@@ -151,21 +190,14 @@ def run(stage1_result: dict, output_dir: str, source_language: str = "en") -> di
     for i, seg in enumerate(raw_segments):
         chunk_path = str(chunks_dir / f"chunk_{i:04d}.wav")
 
-        log.info(
-            "stage2.transcribe",
-            segment=i + 1,
-            total=len(raw_segments),
-            speaker=seg["speaker"],
-            start=seg["start"],
-            end=seg["end"],
-        )
+        log.info("stage2.transcribe",
+                 segment=i + 1, total=len(raw_segments),
+                 speaker=seg["speaker"],
+                 start=seg["start"], end=seg["end"])
 
         try:
-            # Slice audio for this segment
             slice_audio(wav_path, seg["start"], seg["end"], chunk_path)
-
-            # Transcribe
-            result = transcribe_segment(client, chunk_path, language=source_language)
+            result = transcribe_segment(chunk_path, language=source_language)
 
             if not result["text"]:
                 log.warning("stage2.empty_transcription", segment=i)
@@ -175,29 +207,26 @@ def run(stage1_result: dict, output_dir: str, source_language: str = "en") -> di
             offset = seg["start"]
             for word in result["words"]:
                 word["start"] = round(word["start"] + offset, 3)
-                word["end"] = round(word["end"] + offset, 3)
+                word["end"]   = round(word["end"]   + offset, 3)
 
             enriched_segments.append({
                 "segment_id": i,
-                "speaker": seg["speaker"],
-                "start": seg["start"],
-                "end": seg["end"],
-                "text": result["text"],
-                "words": result["words"],
+                "speaker":    seg["speaker"],
+                "start":      seg["start"],
+                "end":        seg["end"],
+                "text":       result["text"],
+                "words":      result["words"],
                 "chunk_path": chunk_path,
             })
 
         except Exception as e:
             log.error("stage2.segment_failed", segment=i, error=str(e))
-            # Skip failed segments — partial output is better than a full crash
-            continue
+            continue   # partial output is better than a full crash
 
     output = {"segments": enriched_segments}
     cache_path.write_text(json.dumps(output, indent=2))
 
-    log.info(
-        "stage2.complete",
-        total_segments=len(enriched_segments),
-        speakers=list({s["speaker"] for s in enriched_segments}),
-    )
+    log.info("stage2.complete",
+             total_segments=len(enriched_segments),
+             speakers=list({s["speaker"] for s in enriched_segments}))
     return output

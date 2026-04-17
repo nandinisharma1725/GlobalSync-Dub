@@ -1,19 +1,16 @@
 """
 backend/workers/tasks.py
 
-Celery async tasks — runs the pipeline in the background.
+Background task runner — uses threading to process dubbing jobs without Redis/Celery.
 
-Workers are separate processes from the API, so heavy GPU/CPU work
-doesn't block the web server.
-
-Start workers with:
-  celery -A backend.workers.tasks worker --loglevel=info --concurrency=2
+Jobs are processed in background threads while the API responds immediately.
 """
 
 import os
 import json
 from pathlib import Path
-from celery import Celery
+from threading import Thread
+from concurrent.futures import ThreadPoolExecutor
 import structlog
 
 from ..utils.config import get_settings
@@ -23,21 +20,8 @@ from ..pipeline.orchestrator import run_pipeline
 log = structlog.get_logger()
 settings = get_settings()
 
-# ── Celery App ────────────────────────────────────────────────────────────────
-celery_app = Celery(
-    "mnc_dubbing",
-    broker=settings.redis_url,
-    backend=settings.redis_url,
-)
-
-celery_app.conf.update(
-    task_serializer="json",
-    result_serializer="json",
-    accept_content=["json"],
-    result_expires=86400,       # results expire after 24h
-    task_track_started=True,
-    worker_prefetch_multiplier=1,   # process one task at a time (GPU bottleneck)
-)
+# ── Thread Pool Executor ──────────────────────────────────────────────────────
+executor = ThreadPoolExecutor(max_workers=2)
 
 
 # ── In-memory progress store ──────────────────────────────────────────────────
@@ -70,14 +54,7 @@ def get_job_progress(job_id: str) -> dict:
 
 # ── Tasks ─────────────────────────────────────────────────────────────────────
 
-@celery_app.task(
-    bind=True,
-    name="dub_video",
-    max_retries=2,
-    default_retry_delay=30,
-)
-def dub_video_task(
-    self,
+def dub_video(
     job_id: str,
     video_path: str,
     target_language: str,
@@ -98,8 +75,6 @@ def dub_video_task(
 
     def on_progress(status: str, pct: int):
         set_job_progress(job_id, status, pct)
-        # Update Celery task state for monitoring tools (Flower)
-        self.update_state(state="PROGRESS", meta={"status": status, "percent": pct})
 
     try:
         result = run_pipeline(
@@ -117,4 +92,9 @@ def dub_video_task(
         error_msg = str(exc)
         log.error("task.dub_video.failed", job_id=job_id, error=error_msg)
         set_job_progress(job_id, "failed", 0, error=error_msg)
-        raise self.retry(exc=exc)
+        raise
+
+
+def start_dub_job(job_id: str, video_path: str, target_language: str):
+    """Queue a dubbing job to run in the background thread pool."""
+    return executor.submit(dub_video, job_id, video_path, target_language)

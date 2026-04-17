@@ -22,6 +22,7 @@ import subprocess
 from pathlib import Path
 from typing import Optional
 import structlog
+import imageio_ffmpeg
 
 from ..utils.config import get_settings
 
@@ -47,9 +48,10 @@ def extract_audio(video_path: str, output_dir: str) -> str:
 
     log.info("stage1.extract_audio", video=video_path, output=wav_path)
 
+    ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
     result = subprocess.run(
         [
-            "ffmpeg", "-y",
+            ffmpeg_path, "-y",
             "-i", video_path,
             "-vn",                    # no video
             "-acodec", "pcm_s16le",   # 16-bit PCM

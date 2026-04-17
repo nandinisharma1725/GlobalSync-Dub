@@ -22,7 +22,7 @@ import structlog
 
 from ..utils.config import get_settings
 from ..utils.storage import save_upload, get_download_url, get_local_path
-from ..workers.tasks import dub_video_task, get_job_progress
+from ..workers.tasks import start_dub_job, get_job_progress
 from ..pipeline.translate import LANGUAGE_NAMES
 
 log = structlog.get_logger()
@@ -98,11 +98,8 @@ async def create_job(
     job_id, video_path = await save_upload(file_bytes, video.filename)
     log.info("api.job_created", job_id=job_id, lang=target_language, size_mb=round(len(file_bytes) / 1e6, 1))
 
-    # Dispatch to Celery worker
-    dub_video_task.apply_async(
-        args=[job_id, video_path, target_language],
-        task_id=job_id,
-    )
+    # Dispatch to background thread
+    start_dub_job(job_id, video_path, target_language)
 
     return {
         "job_id": job_id,

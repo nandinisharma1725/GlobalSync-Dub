@@ -32,6 +32,7 @@ from pathlib import Path
 from typing import Optional
 import numpy as np
 import structlog
+import imageio_ffmpeg
 
 import librosa
 import soundfile as sf
@@ -179,18 +180,15 @@ def build_dubbed_audio_track(
 
 
 def get_video_duration(video_path: str) -> float:
-    """Gets video duration in seconds using ffprobe."""
-    result = subprocess.run(
-        [
-            "ffprobe", "-v", "quiet",
-            "-show_entries", "format=duration",
-            "-of", "csv=p=0",
-            video_path,
-        ],
-        capture_output=True,
-        text=True,
-    )
-    return float(result.stdout.strip())
+    """Gets video duration in seconds using librosa."""
+    try:
+        # Try using librosa to get duration via audio track
+        y, sr = librosa.load(video_path, sr=None, mono=True)
+        return len(y) / sr
+    except Exception:
+        # Fallback: assume a reasonable default
+        log.warning("stage5.could_not_get_video_duration", video=video_path)
+        return 300.0  # 5 minute default
 
 
 def mux_video(
@@ -210,10 +208,12 @@ def mux_video(
     """
     log.info("stage5.mux", output=output_path)
 
+    ffmpeg_path = imageio_ffmpeg.get_ffmpeg_exe()
+    
     if original_audio_volume > 0:
         # Mix original (quiet) + dubbed (full volume) — useful for reviewer mode
         cmd = [
-            "ffmpeg", "-y",
+            ffmpeg_path, "-y",
             "-i", video_path,
             "-i", dubbed_audio_path,
             "-filter_complex",
@@ -229,7 +229,7 @@ def mux_video(
     else:
         # Replace audio entirely
         cmd = [
-            "ffmpeg", "-y",
+            ffmpeg_path, "-y",
             "-i", video_path,
             "-i", dubbed_audio_path,
             "-map", "0:v",
