@@ -1,0 +1,68 @@
+{
+  "wav_path": "C:\\Users\\NANDINI\\Projects\\GlobalSync-Dub\\test\\pipeline_output\\71d062e3\\audio.wav",
+  "segments": [
+    {
+      "speaker": "SPEAKER_02",
+      "start": 0.217,
+      "end": 16.636
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 17.294,
+      "end": 25.647
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 26.238,
+      "end": 28.938
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 30.22,
+      "end": 44.446
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 44.8,
+      "end": 54.065
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 54.487,
+      "end": 59.819
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 60.427,
+      "end": 68.948
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 69.387,
+      "end": 73.184
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 73.673,
+      "end": 80.322
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 80.812,
+      "end": 90.768
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 91.207,
+      "end": 97.045
+    }
+  ],
+  "speaker_count": 4,
+  "speaker_ids": [
+    "SPEAKER_00",
+    "SPEAKER_01",
+    "SPEAKER_02",
+    "SPEAKER_03"
+  ],
+  "duration_sec": 98.5
+}
