@@ -1,0 +1,859 @@
+{
+  "segments": [
+    {
+      "segment_id": 0,
+      "speaker": "SPEAKER_00",
+      "start": 11.978,
+      "end": 15.961,
+      "text": "The Courts Power Group is an energy company based in the UK.",
+      "words": [
+        {
+          "word": "The Courts Power Group is an energy company based in the UK.",
+          "start": 11.978,
+          "end": 15.778
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 1,
+      "speaker": "SPEAKER_02",
+      "start": 15.961,
+      "end": 16.4,
+      "text": "are",
+      "words": [
+        {
+          "word": "are",
+          "start": 15.961,
+          "end": 45.761
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 2,
+      "speaker": "SPEAKER_00",
+      "start": 16.788,
+      "end": 21.833,
+      "text": "Marcus, the managing director, wants to discuss the company's sales figures.",
+      "words": [
+        {
+          "word": "Marcus, the managing director, wants to discuss the company's sales figures.",
+          "start": 16.788,
+          "end": 21.788
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 3,
+      "speaker": "SPEAKER_00",
+      "start": 22.593,
+      "end": 31.418,
+      "text": "He is meeting Maya, the finance director, David the sales and marketing director, and Anna, the customer services director.",
+      "words": [
+        {
+          "word": "He is meeting Maya, the finance director, David the sales and marketing director, and Anna,",
+          "start": 22.593,
+          "end": 29.593
+        },
+        {
+          "word": "the customer services director.",
+          "start": 29.593,
+          "end": 31.233
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 4,
+      "speaker": "SPEAKER_02",
+      "start": 33.224,
+      "end": 47.129,
+      "text": "Now you all know why I've called this meeting. Sales figures for our region are down and we need to address this as soon as we can. So I'd like to start by asking Maya to talk us through the figures. Okay, Maya? Fine.",
+      "words": [
+        {
+          "word": "Now you all know why I've called this meeting.",
+          "start": 33.224,
+          "end": 37.064
+        },
+        {
+          "word": "Sales figures for our region are down",
+          "start": 37.064,
+          "end": 39.544
+        },
+        {
+          "word": "and we need to address this as soon as we can.",
+          "start": 39.544,
+          "end": 41.944
+        },
+        {
+          "word": "So I'd like to start by asking Maya",
+          "start": 41.944,
+          "end": 44.024
+        },
+        {
+          "word": "to talk us through the figures.",
+          "start": 44.024,
+          "end": 46.104
+        },
+        {
+          "word": "Okay, Maya?",
+          "start": 46.104,
+          "end": 47.104
+        },
+        {
+          "word": "Fine.",
+          "start": 47.104,
+          "end": 47.944
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 5,
+      "speaker": "SPEAKER_02",
+      "start": 47.585,
+      "end": 53.288,
+      "text": "and then we can take a look at the products we're offering and compare them with the competition. So, my over to you.",
+      "words": [
+        {
+          "word": "and then we can take a look at the products we're offering and compare them with the competition.",
+          "start": 47.585,
+          "end": 51.885
+        },
+        {
+          "word": "So, my over to you.",
+          "start": 51.885,
+          "end": 53.385
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 6,
+      "speaker": "SPEAKER_04",
+      "start": 53.339,
+      "end": 54.773,
+      "text": "Thanks Marcus. Well...",
+      "words": [
+        {
+          "word": "Thanks Marcus.",
+          "start": 53.339,
+          "end": 54.339
+        },
+        {
+          "word": "Well...",
+          "start": 54.339,
+          "end": 55.339
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 7,
+      "speaker": "SPEAKER_04",
+      "start": 55.263,
+      "end": 57.22,
+      "text": "I prepared some handouts.",
+      "words": [
+        {
+          "word": "I prepared some handouts.",
+          "start": 55.263,
+          "end": 57.263
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 8,
+      "speaker": "SPEAKER_04",
+      "start": 57.777,
+      "end": 59.617,
+      "text": "to show you how the figures are looking.",
+      "words": [
+        {
+          "word": "to show you how the figures are looking.",
+          "start": 57.777,
+          "end": 59.777
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 9,
+      "speaker": "SPEAKER_04",
+      "start": 60.713,
+      "end": 64.358,
+      "text": "If we look at sales year to date.",
+      "words": [
+        {
+          "word": "If we look at sales year to date.",
+          "start": 60.713,
+          "end": 64.313
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 10,
+      "speaker": "SPEAKER_04",
+      "start": 65.995,
+      "end": 66.502,
+      "text": "So.",
+      "words": [
+        {
+          "word": "So.",
+          "start": 65.995,
+          "end": 66.495
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 11,
+      "speaker": "SPEAKER_04",
+      "start": 66.687,
+      "end": 72.728,
+      "text": "In order to meet budget this year we will, in my opinion, have to start some cost saving measures.",
+      "words": [
+        {
+          "word": "In order to meet budget this year we will, in my opinion, have to start some cost saving measures.",
+          "start": 66.687,
+          "end": 72.687
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 12,
+      "speaker": "SPEAKER_03",
+      "start": 73.032,
+      "end": 73.387,
+      "text": "What do you...",
+      "words": [
+        {
+          "word": "What do you...",
+          "start": 73.032,
+          "end": 75.032
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 13,
+      "speaker": "SPEAKER_04",
+      "start": 73.387,
+      "end": 74.112,
+      "text": "mean for that.",
+      "words": [
+        {
+          "word": "mean for that.",
+          "start": 73.387,
+          "end": 74.387
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 14,
+      "speaker": "SPEAKER_04",
+      "start": 74.568,
+      "end": 75.597,
+      "text": "redundancies?",
+      "words": [
+        {
+          "word": "redundancies?",
+          "start": 74.568,
+          "end": 75.568
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 15,
+      "speaker": "SPEAKER_04",
+      "start": 75.85,
+      "end": 80.002,
+      "text": "That's one possibility. I can't agree with you there. We need a strong work.",
+      "words": [
+        {
+          "word": "That's one possibility.",
+          "start": 75.85,
+          "end": 77.25
+        },
+        {
+          "word": "I can't agree with you there.",
+          "start": 77.25,
+          "end": 78.77
+        },
+        {
+          "word": "We need a strong work.",
+          "start": 78.77,
+          "end": 80.01
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 16,
+      "speaker": "SPEAKER_02",
+      "start": 80.002,
+      "end": 80.626,
+      "text": "That's about way more force.",
+      "words": [
+        {
+          "word": "That's about way more force.",
+          "start": 80.002,
+          "end": 83.002
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 17,
+      "speaker": "SPEAKER_02",
+      "start": 81.233,
+      "end": 86.87,
+      "text": "Okay, thanks, Meyer. Look, cost-cutting is something that we need to think about.",
+      "words": [
+        {
+          "word": "Okay, thanks, Meyer.",
+          "start": 81.233,
+          "end": 83.233
+        },
+        {
+          "word": "Look, cost-cutting is something that we need to think about.",
+          "start": 83.233,
+          "end": 86.833
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 18,
+      "speaker": "SPEAKER_02",
+      "start": 87.19,
+      "end": 93.856,
+      "text": "But we also need to stop the downturn in sales and regain market share. So can I bring you in here David?",
+      "words": [
+        {
+          "word": "But we also need to stop the downturn in sales and regain market share.",
+          "start": 87.19,
+          "end": 91.99
+        },
+        {
+          "word": "So can I bring you in here David?",
+          "start": 91.99,
+          "end": 93.79
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 19,
+      "speaker": "SPEAKER_02",
+      "start": 94.43,
+      "end": 104.825,
+      "text": "any commons. Well, it's hard to know what the problem is. Our products are competitive, so they're not getting better offers from the competition.",
+      "words": [
+        {
+          "word": "any commons. Well, it's hard to know what the problem is. Our products are competitive,",
+          "start": 94.43,
+          "end": 101.47
+        },
+        {
+          "word": "so they're not getting better offers from the competition.",
+          "start": 101.47,
+          "end": 104.75
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 20,
+      "speaker": "SPEAKER_02",
+      "start": 105.382,
+      "end": 106.597,
+      "text": "I don't think so.",
+      "words": [
+        {
+          "word": "I don't think so.",
+          "start": 105.382,
+          "end": 106.542
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 21,
+      "speaker": "SPEAKER_01",
+      "start": 107.626,
+      "end": 112.773,
+      "text": "How about I talk you through our office at the moment? I've prepared some handouts.",
+      "words": [
+        {
+          "word": "How about I talk you through our office at the moment?",
+          "start": 107.626,
+          "end": 110.826
+        },
+        {
+          "word": "I've prepared some handouts.",
+          "start": 110.826,
+          "end": 112.746
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 22,
+      "speaker": "SPEAKER_02",
+      "start": 112.958,
+      "end": 115.523,
+      "text": "Yes, go ahead, it'll be good to look at the details.",
+      "words": [
+        {
+          "word": "Yes, go ahead, it'll be good to look at the details.",
+          "start": 112.958,
+          "end": 115.458
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 23,
+      "speaker": "SPEAKER_02",
+      "start": 117.346,
+      "end": 120.805,
+      "text": "Okay, thanks David, that was all useful information.",
+      "words": [
+        {
+          "word": "Okay, thanks David, that was all useful information.",
+          "start": 117.346,
+          "end": 120.626
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 24,
+      "speaker": "SPEAKER_02",
+      "start": 121.598,
+      "end": 123.252,
+      "text": "So Anna, can we turn to you now?",
+      "words": [
+        {
+          "word": "So Anna, can we turn to you now?",
+          "start": 121.598,
+          "end": 123.198
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 25,
+      "speaker": "SPEAKER_02",
+      "start": 124.079,
+      "end": 126.695,
+      "text": "Do you have any ideas why this downturn is happening?",
+      "words": [
+        {
+          "word": "Do you have any ideas why this downturn is happening?",
+          "start": 124.079,
+          "end": 126.579
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 26,
+      "speaker": "SPEAKER_03",
+      "start": 127.42,
+      "end": 131.673,
+      "text": "While it's true, we are seeing a decrease in custom in our region.",
+      "words": [
+        {
+          "word": "While it's true, we are seeing a decrease in custom in our region.",
+          "start": 127.42,
+          "end": 131.66
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 27,
+      "speaker": "SPEAKER_03",
+      "start": 132.01,
+      "end": 138.625,
+      "text": "There's also been an increase in customers cancelling new contracts within 14 days. So look, what do you...",
+      "words": [
+        {
+          "word": "There's also been an increase in customers",
+          "start": 132.01,
+          "end": 134.33
+        },
+        {
+          "word": "cancelling new contracts within 14 days.",
+          "start": 134.33,
+          "end": 137.53
+        },
+        {
+          "word": "So look, what do you...",
+          "start": 137.53,
+          "end": 138.73
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 28,
+      "speaker": "SPEAKER_01",
+      "start": 137.748,
+      "end": 139.469,
+      "text": "Look, do you know why?",
+      "words": [
+        {
+          "word": "Look, do you know why?",
+          "start": 137.748,
+          "end": 139.748
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 29,
+      "speaker": "SPEAKER_01",
+      "start": 139.807,
+      "end": 148.666,
+      "text": "Do the customers say why they don't like our office? I personally feel that this is vital information. I mean, if we can...",
+      "words": [
+        {
+          "word": "Do the customers say why they don't like our office?",
+          "start": 139.807,
+          "end": 143.727
+        },
+        {
+          "word": "I personally feel that this is vital information.",
+          "start": 143.727,
+          "end": 147.247
+        },
+        {
+          "word": "I mean, if we can...",
+          "start": 147.247,
+          "end": 148.647
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 30,
+      "speaker": "SPEAKER_03",
+      "start": 147.755,
+      "end": 149.628,
+      "text": "If I can finish what I was saying.",
+      "words": [
+        {
+          "word": "If I can finish what I was saying.",
+          "start": 147.755,
+          "end": 149.755
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 31,
+      "speaker": "SPEAKER_03",
+      "start": 150.067,
+      "end": 161.508,
+      "text": "I'd like to suggest we review our customer account procedures from first contact to after sales care. I mean, perhaps it would be a good idea to start with that and see if the sales figures improve.",
+      "words": [
+        {
+          "word": "I'd like to suggest we review our customer account procedures from first contact to after",
+          "start": 150.067,
+          "end": 155.827
+        },
+        {
+          "word": "sales care.",
+          "start": 155.827,
+          "end": 156.827
+        },
+        {
+          "word": "I mean, perhaps it would be a good idea to start with that and see if the sales figures",
+          "start": 156.827,
+          "end": 160.827
+        },
+        {
+          "word": "improve.",
+          "start": 160.827,
+          "end": 161.347
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 32,
+      "speaker": "SPEAKER_02",
+      "start": 161.795,
+      "end": 162.571,
+      "text": "Thanks, Anna.",
+      "words": [
+        {
+          "word": "Thanks, Anna.",
+          "start": 161.795,
+          "end": 162.795
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 33,
+      "speaker": "SPEAKER_02",
+      "start": 163.432,
+      "end": 164.832,
+      "text": "What do you two think of that?",
+      "words": [
+        {
+          "word": "What do you two think of that?",
+          "start": 163.432,
+          "end": 165.432
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 34,
+      "speaker": "SPEAKER_04",
+      "start": 165.203,
+      "end": 166.908,
+      "text": "Can I make another suggestion?",
+      "words": [
+        {
+          "word": "Can I make another suggestion?",
+          "start": 165.203,
+          "end": 167.203
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 35,
+      "speaker": "SPEAKER_04",
+      "start": 167.633,
+      "end": 172.139,
+      "text": "I think we need to see the whole picture from the customer's point of view.",
+      "words": [
+        {
+          "word": "I think we need to see the whole picture from the customer's point of view.",
+          "start": 167.633,
+          "end": 172.113
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 36,
+      "speaker": "SPEAKER_04",
+      "start": 172.915,
+      "end": 185.555,
+      "text": "A customer survey perhaps? That would be a big project. It would need a project team, which means taking staff from other departments. Actually, I was thinking about hiring an external researcher.",
+      "words": [
+        {
+          "word": "A customer survey perhaps?",
+          "start": 172.915,
+          "end": 174.355
+        },
+        {
+          "word": "That would be a big project.",
+          "start": 174.355,
+          "end": 176.115
+        },
+        {
+          "word": "It would need a project team,",
+          "start": 176.115,
+          "end": 178.555
+        },
+        {
+          "word": "which means taking staff from other departments.",
+          "start": 178.555,
+          "end": 181.355
+        },
+        {
+          "word": "Actually, I was thinking about hiring an external researcher.",
+          "start": 181.355,
+          "end": 185.475
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 37,
+      "speaker": "SPEAKER_04",
+      "start": 185.909,
+      "end": 188.963,
+      "text": "Get a neutral view on our position in the market.",
+      "words": [
+        {
+          "word": "Get a neutral view on our position in the market.",
+          "start": 185.909,
+          "end": 188.909
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 38,
+      "speaker": "SPEAKER_04",
+      "start": 189.233,
+      "end": 191.039,
+      "text": "and customers views on us.",
+      "words": [
+        {
+          "word": "and customers views on us.",
+          "start": 189.233,
+          "end": 191.233
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 39,
+      "speaker": "SPEAKER_02",
+      "start": 191.309,
+      "end": 194.347,
+      "text": "I like that idea. I think it could be very useful information.",
+      "words": [
+        {
+          "word": "I like that idea. I think it could be very useful information.",
+          "start": 191.309,
+          "end": 194.309
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 40,
+      "speaker": "SPEAKER_04",
+      "start": 194.515,
+      "end": 195.038,
+      "text": "Which..",
+      "words": [
+        {
+          "word": "Which..",
+          "start": 194.515,
+          "end": 195.535
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 41,
+      "speaker": "SPEAKER_03",
+      "start": 195.038,
+      "end": 196.473,
+      "text": "apartment pays for it though.",
+      "words": [
+        {
+          "word": "apartment pays for it though.",
+          "start": 195.038,
+          "end": 197.038
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 42,
+      "speaker": "SPEAKER_02",
+      "start": 196.962,
+      "end": 203.611,
+      "text": "We can talk about that in a minute. Do you agree in principle, though, that we need to understand the cause of the problem?",
+      "words": [
+        {
+          "word": "We can talk about that in a minute.",
+          "start": 196.962,
+          "end": 198.842
+        },
+        {
+          "word": "Do you agree in principle, though,",
+          "start": 198.842,
+          "end": 201.322
+        },
+        {
+          "word": "that we need to understand the cause of the problem?",
+          "start": 201.322,
+          "end": 203.802
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 43,
+      "speaker": "SPEAKER_03",
+      "start": 204.488,
+      "end": 205.889,
+      "text": "Yes, I suppose so.",
+      "words": [
+        {
+          "word": "Yes, I suppose so.",
+          "start": 204.488,
+          "end": 206.088
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 44,
+      "speaker": "SPEAKER_02",
+      "start": 206.429,
+      "end": 206.851,
+      "text": "Good.",
+      "words": [
+        {
+          "word": "Good.",
+          "start": 206.429,
+          "end": 207.429
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 45,
+      "speaker": "SPEAKER_02",
+      "start": 207.796,
+      "end": 213.01,
+      "text": "David, could you look for a market research company we could work with on this? Sure. Great.",
+      "words": [
+        {
+          "word": "David, could you look for a market research company we could work with on this?",
+          "start": 207.796,
+          "end": 212.036
+        },
+        {
+          "word": "Sure.",
+          "start": 212.036,
+          "end": 212.596
+        },
+        {
+          "word": "Great.",
+          "start": 212.596,
+          "end": 213.076
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 46,
+      "speaker": "SPEAKER_02",
+      "start": 213.533,
+      "end": 214.748,
+      "text": "Well, let's convoge that, shall we?",
+      "words": [
+        {
+          "word": "Well, let's convoge that, shall we?",
+          "start": 213.533,
+          "end": 215.533
+        }
+      ],
+      "chunk_path": ""
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "wav_path": "C:\\Users\\NANDINI\\Projects\\GlobalSync-Dub\\backend\\pipeline_output\\c26f6271\\audio.wav",
+  "segments": [
+    {
+      "speaker": "SPEAKER_00",
+      "start": 11.978,
+      "end": 21.833
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 22.593,
+      "end": 31.402
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 33.224,
+      "end": 53.288
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 53.339,
+      "end": 59.617
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 60.713,
+      "end": 64.358
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 66.046,
+      "end": 80.609
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 81.233,
+      "end": 106.597
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 107.626,
+      "end": 112.79
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 112.958,
+      "end": 115.523
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 117.346,
+      "end": 120.755
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 121.615,
+      "end": 123.252
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 124.062,
+      "end": 126.695
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 127.437,
+      "end": 138.625
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 137.748,
+      "end": 148.666
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 147.755,
+      "end": 162.571
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 163.448,
+      "end": 164.832
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 165.187,
+      "end": 166.925
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 167.617,
+      "end": 172.139
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 172.915,
+      "end": 191.039
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 191.309,
+      "end": 194.33
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 194.515,
+      "end": 196.473
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 196.962,
+      "end": 203.611
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 204.488,
+      "end": 206.851
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 207.796,
+      "end": 214.732
+    }
+  ],
+  "speaker_count": 5,
+  "speaker_ids": [
+    "SPEAKER_00",
+    "SPEAKER_01",
+    "SPEAKER_02",
+    "SPEAKER_03",
+    "SPEAKER_04"
+  ],
+  "duration_sec": 220.6
+}
