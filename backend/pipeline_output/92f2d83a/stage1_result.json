@@ -1,24 +1,54 @@
 {
-  "wav_path": "C:\\Users\\NANDINI\\Projects\\GlobalSync-Dub\\backend\\pipeline_output\\c26f6271\\audio.wav",
+  "wav_path": "C:\\Users\\NANDINI\\Projects\\GlobalSync-Dub\\backend\\pipeline_output\\92f2d83a\\audio.wav",
   "segments": [
     {
       "speaker": "SPEAKER_00",
       "start": 11.978,
+      "end": 16.332
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 16.754,
       "end": 21.833
     },
     {
       "speaker": "SPEAKER_00",
       "start": 22.593,
+      "end": 30.593
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 30.593,
       "end": 31.402
     },
     {
       "speaker": "SPEAKER_02",
       "start": 33.224,
+      "end": 41.224
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 41.224,
+      "end": 47.129
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 47.585,
       "end": 53.288
     },
     {
       "speaker": "SPEAKER_03",
       "start": 53.339,
+      "end": 54.773
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 55.263,
+      "end": 57.22
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 57.777,
       "end": 59.617
     },
     {
@@ -29,11 +59,41 @@
     {
       "speaker": "SPEAKER_03",
       "start": 66.046,
+      "end": 72.728
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 72.982,
+      "end": 74.112
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 74.568,
       "end": 80.609
     },
     {
       "speaker": "SPEAKER_02",
       "start": 81.233,
+      "end": 86.87
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 87.207,
+      "end": 93.856
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 94.43,
+      "end": 102.43
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 102.43,
+      "end": 104.825
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 105.382,
       "end": 106.597
     },
     {
@@ -64,17 +124,37 @@
     {
       "speaker": "SPEAKER_04",
       "start": 127.437,
+      "end": 131.673
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 132.01,
       "end": 138.625
     },
     {
       "speaker": "SPEAKER_01",
       "start": 137.748,
+      "end": 143.671
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 143.705,
       "end": 148.666
     },
     {
       "speaker": "SPEAKER_04",
       "start": 147.755,
-      "end": 162.571
+      "end": 149.628
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 150.067,
+      "end": 158.067
+    },
+    {
+      "speaker": "SPEAKER_04",
+      "start": 158.067,
+      "end": 161.491
     },
     {
       "speaker": "SPEAKER_02",
@@ -94,6 +174,16 @@
     {
       "speaker": "SPEAKER_03",
       "start": 172.915,
+      "end": 180.915
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 180.915,
+      "end": 185.555
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 185.909,
       "end": 191.039
     },
     {
@@ -114,11 +204,16 @@
     {
       "speaker": "SPEAKER_04",
       "start": 204.488,
-      "end": 206.851
+      "end": 205.889
     },
     {
       "speaker": "SPEAKER_02",
       "start": 207.796,
+      "end": 213.01
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 213.533,
       "end": 214.732
     }
   ],

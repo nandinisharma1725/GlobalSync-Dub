@@ -173,6 +173,12 @@ def main():
                              "Improves accuracy for large meetings.")
     parser.add_argument("--language", default="en",
                         help="Source language ISO code (default: en)")
+    parser.add_argument("--speakers", default=None,
+                        help="Comma-separated names, e.g. 'Marcus,Maya,David,Anna'\nImproves accuracy on proper nouns.")
+    parser.add_argument("--company", default=None,
+                        help="Company name, e.g. 'Quartz Power Group'")
+    parser.add_argument("--topic", default=None,
+                        help="Meeting topic hint, e.g. 'Q4 sales review'")
     parser.add_argument("--job-id",
                         help="Job ID for output folder name (auto if not set)")
     args = parser.parse_args()
@@ -259,9 +265,13 @@ def main():
         step(3, 3, "Detecting speakers with pyannote.audio…")
         print(f"         {dim('First run downloads ~1 GB model — takes a few minutes.')}")
         try:
+            # Only pass num_speakers when explicitly provided — keeps
+            # compatibility with older versions of stage1_extract.py
+            diarize_kwargs = {}
+            if args.num_speakers is not None:
+                diarize_kwargs["num_speakers"] = args.num_speakers
             raw_segs = stage1_extract.run_diarization(
-                wav_path, output_dir,
-                # num_speakers=args.num_speakers,
+                wav_path, output_dir, **diarize_kwargs
             )
         except Exception as e:
             err(str(e))
@@ -292,17 +302,26 @@ def main():
 
     model_sizes = {"tiny": "39 MB", "base": "74 MB", "small": "244 MB",
                    "medium": "769 MB", "large": "1.5 GB"}
-    print(f"  Model: {bold(args.model)} ({model_sizes.get(args.model, '?')})  "
-          f"  Language: {bold(args.language)}")
-    print(f"  {dim('Audio is passed as numpy arrays — no ffmpeg subprocess (Windows fix).')}")
+    speaker_display = args.speakers or dim('not set — names improve accuracy')
+    print(f"  Model:    {bold(args.model)} ({model_sizes.get(args.model, '?')})")
+    print(f"  Language: {bold(args.language)}")
+    print(f"  Speakers: {speaker_display}")
+    if args.company: print(f"  Company:  {dim(args.company)}")
+    print(f"  {dim('numpy array input — no ffmpeg subprocess (Windows fix)')}")
 
     t2 = time.time()
     try:
+        # Parse speaker names if provided (comma-separated)
+        speaker_names = [n.strip() for n in args.speakers.split(',') if n.strip()] if args.speakers else None
+
         stage2_result = stage2_transcribe.run(
             stage1_result   = stage1_result,
             output_dir      = output_dir,
             source_language = args.language,
             model_name      = args.model,
+            speaker_names   = speaker_names,
+            company_name    = args.company,
+            meeting_topic   = args.topic,
         )
     except Exception as e:
         err(f"Stage 2 failed: {e}")

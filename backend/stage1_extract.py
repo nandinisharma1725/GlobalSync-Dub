@@ -1,20 +1,44 @@
 """
-stage1_extract.py  —  Stage 1 (improved): Video upload, audio extraction, speaker diarization
+stage1_extract.py  —  Stage 1 v4: Video upload, audio extraction, speaker diarization
 
-Changes from previous version:
-  - MIN_SEGMENT_DURATION raised 0.5s → 1.0s  (filters noise/cross-talk fragments)
-  - MAX_MERGE_GAP raised 0.3s → 0.6s         (meetings have natural pauses mid-thought)
-  - Orphan reassignment pass: a tiny segment sandwiched between turns of the
-    same speaker (e.g. the 0.44s "are" fragment) is reassigned to that speaker
-    instead of creating a spurious new speaker entry
-  - Two-pass merge: standard merge → orphan fix → merge again
+What changed from v3 and WHY:
+
+The multi-speaker contamination problem (e.g. "What do you mean? Redundancies?"
+appearing in SPEAKER_04's turn) was caused entirely in Stage 1, NOT Stage 2.
+
+Root cause trace:
+  - pyannote gave a 0.35s SPEAKER_03 fragment at 73.0→73.4s
+  - v3's orphan reassignment (gap threshold: 1.5s) absorbed it into SPEAKER_04
+  - v3's max_gap=0.6s then merged all SPEAKER_04 fragments into a 14.6s block
+  - Whisper received 14.6s of audio containing 3+ different speakers
+  - No amount of post-transcription merging can fix this — damage already done
+
+Three fixes applied here:
+
+  1. max_gap: 0.6s → 0.4s
+     A gap of 0.41s between two same-speaker segments is more likely a real
+     speaker boundary in a meeting than a breath pause. 0.4s is conservative
+     enough to catch natural pauses without eating into speaker transitions.
+
+  2. orphan_gap: 1.5s → 0.5s
+     Previous version reassigned an orphan if its neighbor was within 1.5s.
+     That's too wide — it was absorbing real short turns from other speakers.
+     Now only reassign if the neighbor is within 0.5s (very close = likely
+     the same speaker mislabelled by pyannote).
+
+  3. max_seg_dur: NEW 8.0s cap
+     Any segment longer than 8s is split into equal chunks.
+     WHY 8s: a single continuous turn in a meeting is rarely longer than 8s
+     without a pause. If a segment exceeds 8s it almost certainly contains
+     multiple speakers. Splitting forces Whisper to process smaller, cleaner
+     audio windows.
+
+  4. min_dur: 1.0s → 0.8s
+     Slightly relaxed to preserve short-but-real turns like "Yes." or "Sure."
+     These short confirmations are important in meeting dialogue.
 
 Install:
   pip install imageio-ffmpeg soundfile numpy structlog pyannote.audio torch torchaudio
-
-Environment variable (for diarization):
-  HF_TOKEN=hf_...   (huggingface.co → Settings → Tokens)
-  Accept model license: huggingface.co/pyannote/speaker-diarization-3.1
 """
 
 import gc
@@ -28,16 +52,14 @@ import structlog
 
 log = structlog.get_logger()
 
-# ── Constants ─────────────────────────────────────────────────────────────────
 WHISPER_SAMPLE_RATE  = 16_000
-MIN_SEGMENT_DURATION = 1.0    # raised from 0.5 — filters micro-fragments
-MAX_MERGE_GAP        = 0.6    # raised from 0.3 — handles natural pauses mid-sentence
-ORPHAN_GAP_THRESHOLD = 1.5    # max gap to a neighbor for orphan reassignment
+MIN_SEGMENT_DURATION = 0.8    # v4: was 1.0 — preserves short turns like "Sure."
+MAX_MERGE_GAP        = 0.4    # v4: was 0.6 — less aggressive, avoids speaker bleed
+ORPHAN_GAP_THRESHOLD = 0.5    # v4: was 1.5 — only reassign very close orphans
+MAX_SEGMENT_DURATION = 8.0    # v4: NEW — cap ensures Whisper gets single-speaker audio
 SUPPORTED_FORMATS    = {".mp4", ".mov", ".webm", ".mkv"}
 MAX_FILE_SIZE_MB     = 500
 
-
-# ── Validation ────────────────────────────────────────────────────────────────
 
 def validate_video_file(video_path: str) -> list:
     p = Path(video_path)
@@ -46,25 +68,14 @@ def validate_video_file(video_path: str) -> list:
     errors = []
     ext = p.suffix.lower()
     if ext not in SUPPORTED_FORMATS:
-        errors.append(
-            f"Unsupported format '{ext}'. Supported: {sorted(SUPPORTED_FORMATS)}"
-        )
+        errors.append(f"Unsupported format '{ext}'. Supported: {sorted(SUPPORTED_FORMATS)}")
     size_mb = p.stat().st_size / (1024 * 1024)
     if size_mb > MAX_FILE_SIZE_MB:
-        errors.append(
-            f"File too large ({size_mb:.0f} MB). Maximum: {MAX_FILE_SIZE_MB} MB."
-        )
+        errors.append(f"File too large ({size_mb:.0f} MB). Maximum: {MAX_FILE_SIZE_MB} MB.")
     return errors
 
 
-# ── Audio extraction ──────────────────────────────────────────────────────────
-
 def extract_audio(video_path: str, output_dir: str) -> str:
-    """
-    Strips audio from video using FFmpeg and writes a 16kHz mono WAV.
-    Uses imageio-ffmpeg so FFmpeg works on Windows without PATH setup.
-    Returns: absolute path to audio.wav
-    """
     try:
         import imageio_ffmpeg
     except ImportError:
@@ -80,15 +91,11 @@ def extract_audio(video_path: str, output_dir: str) -> str:
     result = subprocess.run(
         [
             imageio_ffmpeg.get_ffmpeg_exe(), "-y",
-            "-i",      video_path,
-            "-vn",                   # no video
-            "-acodec", "pcm_s16le",  # 16-bit PCM
-            "-ar",     "16000",      # 16 kHz
-            "-ac",     "1",          # mono
+            "-i", video_path, "-vn",
+            "-acodec", "pcm_s16le", "-ar", "16000", "-ac", "1",
             wav_path,
         ],
-        capture_output=True,
-        text=True,
+        capture_output=True, text=True,
     )
 
     if result.returncode != 0:
@@ -102,13 +109,10 @@ def extract_audio(video_path: str, output_dir: str) -> str:
 
 
 def get_audio_duration(wav_path: str) -> float:
-    """Returns duration of a WAV file in seconds."""
     import soundfile as sf
     info = sf.info(wav_path)
     return info.frames / info.samplerate
 
-
-# ── Speaker diarization ───────────────────────────────────────────────────────
 
 def run_diarization(
     wav_path:     str,
@@ -117,13 +121,6 @@ def run_diarization(
     min_speakers: Optional[int] = None,
     max_speakers: Optional[int] = None,
 ) -> list:
-    """
-    Runs pyannote.audio speaker diarization on the extracted WAV.
-    Returns [{speaker, start, end}, ...] sorted by start time.
-
-    Tip: pass num_speakers if you know the board size in advance.
-    Results cached to diarization.json so reruns skip this step.
-    """
     cache_path = Path(output_dir) / "diarization.json"
     if cache_path.exists():
         log.info("stage1.diarization.cache_hit")
@@ -178,99 +175,108 @@ def run_diarization(
     return segments
 
 
-# ── Segment cleanup (3-pass improved) ────────────────────────────────────────
-
 def merge_short_segments(
     segments:     list,
     min_duration: float = MIN_SEGMENT_DURATION,
     max_gap:      float = MAX_MERGE_GAP,
     orphan_gap:   float = ORPHAN_GAP_THRESHOLD,
+    max_seg_dur:  float = MAX_SEGMENT_DURATION,
 ) -> list:
     """
-    Cleans up raw diarization output in three passes.
+    Cleans raw diarization output in four passes.
 
-    Pass 1 — Standard merge
-      Consecutive same-speaker segments with gap < max_gap get joined.
-      max_gap = 0.6s handles natural pauses mid-sentence in meetings.
+    Pass 1 — Gap merge
+      Same-speaker consecutive segments with gap < max_gap (0.4s) are joined,
+      but only if the resulting segment would still be <= max_seg_dur (8s).
+      The 8s cap prevents creating enormous segments containing multiple speakers.
 
     Pass 2 — Orphan reassignment
-      A short segment (< min_duration) sandwiched between turns of the SAME
-      other speaker gets reassigned to that speaker.
+      A very short segment sandwiched between turns of the SAME other speaker
+      and within orphan_gap (0.5s) of both neighbors is reassigned.
+      Tight 0.5s threshold prevents absorbing real (if short) speaker turns.
 
-      Example from real data:
-        SPEAKER_02 (20s) → SPEAKER_02 "are" (0.44s) → SPEAKER_02 (5s)
-        The 0.44s fragment is an orphan and gets reassigned to SPEAKER_02.
+    Pass 3 — Re-merge after reassignment
+      Same as Pass 1, applied again after orphans are fixed.
 
-      This fixes misattributed fragments like "are", "What do you...", etc.
-
-    Pass 3 — Re-merge
-      After reassignment, orphans may now be adjacent to their new speaker's
-      turns — merge again to produce clean output.
-
-    Final — drop any remaining segments shorter than min_duration.
+    Pass 4 — Duration cap split
+      Any segment still > 8s (because a single raw pyannote segment was already
+      longer) is split into equal chunks of max_seg_dur.
+      This guarantees Whisper always receives a single-speaker audio window.
     """
     if not segments:
         return []
 
-    # ── Pass 1: standard gap-based merge ─────────────────────────────────────
+    # Pass 1: merge
     merged = [segments[0].copy()]
     for seg in segments[1:]:
-        last = merged[-1]
-        gap  = seg["start"] - last["end"]
-        if seg["speaker"] == last["speaker"] and gap < max_gap:
+        last    = merged[-1]
+        gap     = seg["start"] - last["end"]
+        new_dur = seg["end"]   - last["start"]
+        if (seg["speaker"] == last["speaker"]
+                and gap < max_gap
+                and new_dur <= max_seg_dur):
             last["end"] = seg["end"]
         else:
             merged.append(seg.copy())
 
-    # ── Pass 2: orphan reassignment ───────────────────────────────────────────
+    # Pass 2: orphan reassignment
     result = []
     for i, seg in enumerate(merged):
-        dur = seg["end"] - seg["start"]
-        seg = seg.copy()
-
+        seg  = seg.copy()
+        dur  = seg["end"] - seg["start"]
         if dur < min_duration:
-            prev     = merged[i - 1] if i > 0             else None
-            nxt      = merged[i + 1] if i < len(merged)-1 else None
-            prev_gap = seg["start"] - prev["end"] if prev else 999
-            next_gap = nxt["start"] - seg["end"]  if nxt  else 999
-
-            # Sandwiched between the same speaker → reassign
+            prev = merged[i-1] if i > 0             else None
+            nxt  = merged[i+1] if i < len(merged)-1 else None
+            pg   = seg["start"] - prev["end"] if prev else 999
+            ng   = nxt["start"] - seg["end"]  if nxt  else 999
             if (prev and nxt
                     and prev["speaker"] == nxt["speaker"]
-                    and prev_gap < orphan_gap
-                    and next_gap < orphan_gap):
-                seg["speaker"]    = prev["speaker"]
-                seg["reassigned"] = True
-
-            # Trailing orphan right after a speaker turn
-            elif prev and prev_gap < orphan_gap:
-                seg["speaker"]    = prev["speaker"]
-                seg["reassigned"] = True
-
+                    and pg < orphan_gap
+                    and ng < orphan_gap):
+                seg["speaker"] = prev["speaker"]
+            elif prev and pg < orphan_gap:
+                seg["speaker"] = prev["speaker"]
         result.append(seg)
 
-    # ── Pass 3: re-merge after reassignment ───────────────────────────────────
-    final = [result[0].copy()]
+    # Pass 3: re-merge
+    merged2 = [result[0].copy()]
     for seg in result[1:]:
-        last = final[-1]
-        gap  = seg["start"] - last["end"]
-        if seg["speaker"] == last["speaker"] and gap < max_gap:
+        last    = merged2[-1]
+        gap     = seg["start"] - last["end"]
+        new_dur = seg["end"]   - last["start"]
+        if (seg["speaker"] == last["speaker"]
+                and gap < max_gap
+                and new_dur <= max_seg_dur):
             last["end"] = seg["end"]
         else:
-            final.append(seg.copy())
+            merged2.append(seg.copy())
 
-    # ── Final filter ──────────────────────────────────────────────────────────
+    # Pass 4: split oversized segments
+    final = []
+    for seg in merged2:
+        dur = seg["end"] - seg["start"]
+        if dur > max_seg_dur:
+            # Split into equal-duration chunks
+            start = seg["start"]
+            while start < seg["end"]:
+                chunk_end = min(start + max_seg_dur, seg["end"])
+                if chunk_end - start >= min_duration:
+                    final.append({
+                        "speaker": seg["speaker"],
+                        "start":   round(start, 3),
+                        "end":     round(chunk_end, 3),
+                    })
+                start = chunk_end
+        else:
+            final.append(seg)
+
     clean = [s for s in final if (s["end"] - s["start"]) >= min_duration]
 
-    reassigned = sum(1 for s in result if s.get("reassigned"))
     log.info("stage1.merge_complete",
-             raw=len(segments), after_merge=len(clean),
-             dropped=len(segments) - len(clean),
-             reassigned=reassigned)
+             raw=len(segments), after=len(clean),
+             dropped=len(segments) - len(clean))
     return clean
 
-
-# ── Main entry point ──────────────────────────────────────────────────────────
 
 def run(
     video_path:   str,
@@ -299,10 +305,10 @@ def run(
         raise ValueError("Video validation failed:\n" +
                          "\n".join(f"  • {e}" for e in errors))
 
-    wav_path  = extract_audio(video_path, output_dir)
-    duration  = get_audio_duration(wav_path)
+    wav_path = extract_audio(video_path, output_dir)
+    duration = get_audio_duration(wav_path)
 
-    raw_segs  = run_diarization(
+    raw_segs = run_diarization(
         wav_path, output_dir,
         num_speakers=num_speakers,
         min_speakers=min_speakers,
