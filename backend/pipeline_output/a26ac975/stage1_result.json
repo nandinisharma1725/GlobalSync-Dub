@@ -1,0 +1,88 @@
+{
+  "wav_path": "C:\\Users\\NANDINI\\Projects\\GlobalSync-Dub\\backend\\pipeline_output\\a26ac975\\audio.wav",
+  "segments": [
+    {
+      "speaker": "SPEAKER_02",
+      "start": 0.217,
+      "end": 8.217
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 8.217,
+      "end": 16.217
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 17.294,
+      "end": 25.294
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 26.238,
+      "end": 28.955
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 30.22,
+      "end": 38.22
+    },
+    {
+      "speaker": "SPEAKER_00",
+      "start": 38.22,
+      "end": 44.446
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 44.8,
+      "end": 52.8
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 52.8,
+      "end": 54.065
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 54.487,
+      "end": 59.819
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 60.427,
+      "end": 68.427
+    },
+    {
+      "speaker": "SPEAKER_01",
+      "start": 69.387,
+      "end": 73.184
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 73.673,
+      "end": 80.322
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 80.812,
+      "end": 88.812
+    },
+    {
+      "speaker": "SPEAKER_03",
+      "start": 88.812,
+      "end": 90.768
+    },
+    {
+      "speaker": "SPEAKER_02",
+      "start": 91.207,
+      "end": 97.045
+    }
+  ],
+  "speaker_count": 4,
+  "speaker_ids": [
+    "SPEAKER_00",
+    "SPEAKER_01",
+    "SPEAKER_02",
+    "SPEAKER_03"
+  ],
+  "duration_sec": 98.5
+}

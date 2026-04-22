@@ -1,0 +1,259 @@
+{
+  "target_language": "hi",
+  "target_language_name": "Hindi",
+  "segments": [
+    {
+      "segment_id": 0,
+      "speaker": "SPEAKER_02",
+      "start": 0.217,
+      "end": 16.217,
+      "text": "Hello everyone, thank you guys for coming to our weekly student success meeting. And let's just get started. So I have our list of chronically up. Students here. I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+      "words": [
+        {
+          "word": "Hello everyone, thank you guys for coming to our weekly student success meeting.",
+          "start": 0.217,
+          "end": 5.337
+        },
+        {
+          "word": "And let's just get started.",
+          "start": 5.337,
+          "end": 6.697
+        },
+        {
+          "word": "So I have our list of chronically up.",
+          "start": 6.697,
+          "end": 8.217
+        },
+        {
+          "word": "Students here. I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+          "start": 8.217,
+          "end": 16.217
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "सभी को नमस्कार, हमारी साप्ताहिक छात्र सफलता बैठक में आने के लिए आप सभी को धन्यवाद। और चलिए शुरू करते हैं. तो मेरे पास कालानुक्रमिक रूप से हमारी सूची है। यहां के छात्र. मैं एक परेशान करने वाली प्रवृत्ति देख रहा हूं। बहुत से छात्र शुक्रवार को परीक्षा छोड़ रहे हैं। क्या किसी को कोई अंदाज़ा है कि क्या हो रहा है?",
+      "original_text": "Hello everyone, thank you guys for coming to our weekly student success meeting. And let's just get started. So I have our list of chronically up. Students here. I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 1,
+      "speaker": "SPEAKER_01",
+      "start": 17.294,
+      "end": 25.294,
+      "text": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays. It might be good if we did something like a pancake breakfast to encourage them to...",
+      "words": [
+        {
+          "word": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays.",
+          "start": 17.294,
+          "end": 21.854
+        },
+        {
+          "word": "It might be good if we did something like a pancake breakfast to encourage them to...",
+          "start": 21.854,
+          "end": 25.294
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "मैंने अपने कुछ शिष्यों को यह बात करते हुए सुना है कि शुक्रवार को बिस्तर से उठना कितना कठिन होता है। यह अच्छा हो सकता है अगर हम उन्हें प्रोत्साहित करने के लिए पैनकेक नाश्ते जैसा कुछ करें...",
+      "original_text": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays. It might be good if we did something like a pancake breakfast to encourage them to...",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 2,
+      "speaker": "SPEAKER_01",
+      "start": 26.238,
+      "end": 28.955,
+      "text": "I think that's a great idea. Let's try that next week.",
+      "words": [
+        {
+          "word": "I think that's a great idea. Let's try that next week.",
+          "start": 26.238,
+          "end": 33.238
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "मुझे लगता है कि यह बहुत अच्छा विचार है. आइए अगले सप्ताह इसे आज़माएँ।",
+      "original_text": "I think that's a great idea. Let's try that next week.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 3,
+      "speaker": "SPEAKER_00",
+      "start": 30.22,
+      "end": 44.446,
+      "text": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing. We should put up posters with tips for not getting six since it's almost flu season. Like, you know, wash your hands after the bathroom. Stuff like that.",
+      "words": [
+        {
+          "word": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing.",
+          "start": 30.22,
+          "end": 38.22
+        },
+        {
+          "word": "We should put up posters with tips for not getting six since it's almost flu season.",
+          "start": 38.22,
+          "end": 42.22
+        },
+        {
+          "word": "Like, you know, wash your hands after the bathroom. Stuff like that.",
+          "start": 42.22,
+          "end": 44.22
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "ऐसा इसलिए भी हो सकता है क्योंकि बहुत सारे छात्र अब बीमार हो रहे हैं क्योंकि बाहर ठंड बढ़ रही है। मेरे कार्यालय में कई छात्र सूँघने और खांसी जैसे लक्षणों के साथ आए हैं। चूँकि यह लगभग फ्लू का मौसम है, इसलिए हमें छह न पाने के सुझावों वाले पोस्टर लगाने चाहिए। जैसे, आप जानते हैं, बाथरूम के बाद अपने हाथ धोएं। इस तरह के सामान।",
+      "original_text": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing. We should put up posters with tips for not getting six since it's almost flu season. Like, you know, wash your hands after the bathroom. Stuff like that.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 4,
+      "speaker": "SPEAKER_02",
+      "start": 44.8,
+      "end": 54.065,
+      "text": "I think that's a good idea and it'll be a good reminder for the teachers as well. One other thing I want to talk about, there's a student I've noticed. John Smith.",
+      "words": [
+        {
+          "word": "I think that's a good idea and it'll be a good reminder for the teachers as well.",
+          "start": 44.8,
+          "end": 49.48
+        },
+        {
+          "word": "One other thing I want to talk about, there's a student I've noticed.",
+          "start": 49.48,
+          "end": 52.8
+        },
+        {
+          "word": "John Smith.",
+          "start": 52.8,
+          "end": 53.8
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "मुझे लगता है कि यह एक अच्छा विचार है और यह शिक्षकों के लिए भी एक अच्छा अनुस्मारक होगा। एक और चीज़ जिसके बारे में मैं बात करना चाहता हूँ, वह एक छात्र है जिस पर मैंने ध्यान दिया है। जॉन स्मिथ.",
+      "original_text": "I think that's a good idea and it'll be a good reminder for the teachers as well. One other thing I want to talk about, there's a student I've noticed. John Smith.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 5,
+      "speaker": "SPEAKER_02",
+      "start": 54.487,
+      "end": 59.819,
+      "text": "He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+      "words": [
+        {
+          "word": "He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+          "start": 54.487,
+          "end": 59.767
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "वह पहले ही सात दिन चूक चुका है और अभी नवंबर ही है। क्या किसी को अंदाज़ा है कि उसके साथ क्या हो रहा है?",
+      "original_text": "He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 6,
+      "speaker": "SPEAKER_01",
+      "start": 60.427,
+      "end": 68.427,
+      "text": "I might be able to fill in the gaps there. I talked to John today and he's really stressed out. He's been dealing with helping his parents take care of his younger siblings.",
+      "words": [
+        {
+          "word": "I might be able to fill in the gaps there. I talked to John today and he's really stressed",
+          "start": 60.427,
+          "end": 64.507
+        },
+        {
+          "word": "out. He's been dealing with helping his parents take care of his younger siblings.",
+          "start": 64.507,
+          "end": 68.427
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "मैं वहां कमियों को भरने में सक्षम हो सकता हूं। मैंने आज जॉन से बात की और वह सचमुच बहुत तनाव में है। वह अपने छोटे भाई-बहनों की देखभाल में अपने माता-पिता की मदद कर रहा है।",
+      "original_text": "I might be able to fill in the gaps there. I talked to John today and he's really stressed out. He's been dealing with helping his parents take care of his younger siblings.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 7,
+      "speaker": "SPEAKER_01",
+      "start": 69.387,
+      "end": 73.184,
+      "text": "It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+      "words": [
+        {
+          "word": "It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+          "start": 69.387,
+          "end": 73.107
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "यह वास्तव में एक अच्छा विचार हो सकता है यदि वह मार्गदर्शन परामर्शदाता से थोड़ी बात करे।",
+      "original_text": "It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 8,
+      "speaker": "SPEAKER_03",
+      "start": 73.673,
+      "end": 80.322,
+      "text": "I can talk to John today if you want to send him to my office after you meet with him. It's a lot to deal with for middle schooler.",
+      "words": [
+        {
+          "word": "I can talk to John today if you want to send him to my office after you meet with him.",
+          "start": 73.673,
+          "end": 77.673
+        },
+        {
+          "word": "It's a lot to deal with for middle schooler.",
+          "start": 77.673,
+          "end": 80.053
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "यदि आप जॉन से मिलने के बाद उसे मेरे कार्यालय भेजना चाहें तो मैं आज उससे बात कर सकता हूँ। मिडिल स्कूल के विद्यार्थियों के लिए इससे निपटना बहुत कठिन है।",
+      "original_text": "I can talk to John today if you want to send him to my office after you meet with him. It's a lot to deal with for middle schooler.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 9,
+      "speaker": "SPEAKER_03",
+      "start": 80.812,
+      "end": 90.768,
+      "text": "Great thanks and I can help out with the family's childcare needs. I'll look for some free or low-cost resources in the community to share. I'm going to share with John and he can share them with his family.",
+      "words": [
+        {
+          "word": "Great thanks and I can help out with the family's childcare needs. I'll look for some free or low-cost resources in the community to share.",
+          "start": 80.812,
+          "end": 88.812
+        },
+        {
+          "word": "I'm going to share with John and he can share them with his family.",
+          "start": 88.812,
+          "end": 90.812
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "बहुत धन्यवाद और मैं परिवार की बच्चों की देखभाल की ज़रूरतों में मदद कर सकता हूँ। मैं साझा करने के लिए समुदाय में कुछ निःशुल्क या कम लागत वाले संसाधनों की तलाश करूँगा। मैं इसे जॉन के साथ साझा करने जा रहा हूं और वह इन्हें अपने परिवार के साथ साझा कर सकता है।",
+      "original_text": "Great thanks and I can help out with the family's childcare needs. I'll look for some free or low-cost resources in the community to share. I'm going to share with John and he can share them with his family.",
+      "target_language": "hi"
+    },
+    {
+      "segment_id": 10,
+      "speaker": "SPEAKER_02",
+      "start": 91.207,
+      "end": 97.045,
+      "text": "Great, well some really good ideas here today. Thanks for coming and if no one has anything else I think we can wrap up.",
+      "words": [
+        {
+          "word": "Great, well some really good ideas here today. Thanks for coming and if no one has anything else I think we can wrap up.",
+          "start": 91.207,
+          "end": 97.207
+        }
+      ],
+      "chunk_path": "",
+      "translated_text": "बढ़िया, आज यहाँ कुछ सचमुच अच्छे विचार हैं। आने के लिए धन्यवाद और अगर किसी के पास और कुछ नहीं है तो मुझे लगता है कि हम इसे ख़त्म कर सकते हैं।",
+      "original_text": "Great, well some really good ideas here today. Thanks for coming and if no one has anything else I think we can wrap up.",
+      "target_language": "hi"
+    }
+  ]
+}

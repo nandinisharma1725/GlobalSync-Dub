@@ -1,0 +1,224 @@
+{
+  "segments": [
+    {
+      "segment_id": 0,
+      "speaker": "SPEAKER_02",
+      "start": 0.217,
+      "end": 16.217,
+      "text": "Hello everyone, thank you guys for coming to our weekly student success meeting. And let's just get started. So I have our list of chronically up. Students here. I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+      "words": [
+        {
+          "word": "Hello everyone, thank you guys for coming to our weekly student success meeting.",
+          "start": 0.217,
+          "end": 5.337
+        },
+        {
+          "word": "And let's just get started.",
+          "start": 5.337,
+          "end": 6.697
+        },
+        {
+          "word": "So I have our list of chronically up.",
+          "start": 6.697,
+          "end": 8.217
+        },
+        {
+          "word": "Students here. I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+          "start": 8.217,
+          "end": 16.217
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 1,
+      "speaker": "SPEAKER_01",
+      "start": 17.294,
+      "end": 25.294,
+      "text": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays. It might be good if we did something like a pancake breakfast to encourage them to...",
+      "words": [
+        {
+          "word": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays.",
+          "start": 17.294,
+          "end": 21.854
+        },
+        {
+          "word": "It might be good if we did something like a pancake breakfast to encourage them to...",
+          "start": 21.854,
+          "end": 25.294
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 2,
+      "speaker": "SPEAKER_01",
+      "start": 26.238,
+      "end": 28.955,
+      "text": "I think that's a great idea. Let's try that next week.",
+      "words": [
+        {
+          "word": "I think that's a great idea. Let's try that next week.",
+          "start": 26.238,
+          "end": 33.238
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 3,
+      "speaker": "SPEAKER_00",
+      "start": 30.22,
+      "end": 44.446,
+      "text": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing. We should put up posters with tips for not getting six since it's almost flu season. Like, you know, wash your hands after the bathroom. Stuff like that.",
+      "words": [
+        {
+          "word": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing.",
+          "start": 30.22,
+          "end": 38.22
+        },
+        {
+          "word": "We should put up posters with tips for not getting six since it's almost flu season.",
+          "start": 38.22,
+          "end": 42.22
+        },
+        {
+          "word": "Like, you know, wash your hands after the bathroom. Stuff like that.",
+          "start": 42.22,
+          "end": 44.22
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 4,
+      "speaker": "SPEAKER_02",
+      "start": 44.8,
+      "end": 54.065,
+      "text": "I think that's a good idea and it'll be a good reminder for the teachers as well. One other thing I want to talk about, there's a student I've noticed. John Smith.",
+      "words": [
+        {
+          "word": "I think that's a good idea and it'll be a good reminder for the teachers as well.",
+          "start": 44.8,
+          "end": 49.48
+        },
+        {
+          "word": "One other thing I want to talk about, there's a student I've noticed.",
+          "start": 49.48,
+          "end": 52.8
+        },
+        {
+          "word": "John Smith.",
+          "start": 52.8,
+          "end": 53.8
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 5,
+      "speaker": "SPEAKER_02",
+      "start": 54.487,
+      "end": 59.819,
+      "text": "He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+      "words": [
+        {
+          "word": "He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+          "start": 54.487,
+          "end": 59.767
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 6,
+      "speaker": "SPEAKER_01",
+      "start": 60.427,
+      "end": 68.427,
+      "text": "I might be able to fill in the gaps there. I talked to John today and he's really stressed out. He's been dealing with helping his parents take care of his younger siblings.",
+      "words": [
+        {
+          "word": "I might be able to fill in the gaps there. I talked to John today and he's really stressed",
+          "start": 60.427,
+          "end": 64.507
+        },
+        {
+          "word": "out. He's been dealing with helping his parents take care of his younger siblings.",
+          "start": 64.507,
+          "end": 68.427
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 7,
+      "speaker": "SPEAKER_01",
+      "start": 69.387,
+      "end": 73.184,
+      "text": "It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+      "words": [
+        {
+          "word": "It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+          "start": 69.387,
+          "end": 73.107
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 8,
+      "speaker": "SPEAKER_03",
+      "start": 73.673,
+      "end": 80.322,
+      "text": "I can talk to John today if you want to send him to my office after you meet with him. It's a lot to deal with for middle schooler.",
+      "words": [
+        {
+          "word": "I can talk to John today if you want to send him to my office after you meet with him.",
+          "start": 73.673,
+          "end": 77.673
+        },
+        {
+          "word": "It's a lot to deal with for middle schooler.",
+          "start": 77.673,
+          "end": 80.053
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 9,
+      "speaker": "SPEAKER_03",
+      "start": 80.812,
+      "end": 90.768,
+      "text": "Great thanks and I can help out with the family's childcare needs. I'll look for some free or low-cost resources in the community to share. I'm going to share with John and he can share them with his family.",
+      "words": [
+        {
+          "word": "Great thanks and I can help out with the family's childcare needs. I'll look for some free or low-cost resources in the community to share.",
+          "start": 80.812,
+          "end": 88.812
+        },
+        {
+          "word": "I'm going to share with John and he can share them with his family.",
+          "start": 88.812,
+          "end": 90.812
+        }
+      ],
+      "chunk_path": ""
+    },
+    {
+      "segment_id": 10,
+      "speaker": "SPEAKER_02",
+      "start": 91.207,
+      "end": 97.045,
+      "text": "Great, well some really good ideas here today. Thanks for coming and if no one has anything else I think we can wrap up.",
+      "words": [
+        {
+          "word": "Great, well some really good ideas here today. Thanks for coming and if no one has anything else I think we can wrap up.",
+          "start": 91.207,
+          "end": 97.207
+        }
+      ],
+      "chunk_path": ""
+    }
+  ]
+}
